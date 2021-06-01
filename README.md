@@ -1,2 +1,2 @@
-# Code_Samples
+# Code Samples
 Repository for Testing New APIs or pieces of code
