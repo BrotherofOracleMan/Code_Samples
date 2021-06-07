@@ -6,8 +6,6 @@ import time
 from functools import lru_cache, wraps
 from datetime import datetime, timedelta
 
-print(ssl)
-
 if hasattr(ssl,"__create_unverified_context"):
     ssl._create_default_https_context = ssl._create_unverified_context
 
