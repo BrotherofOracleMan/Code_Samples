@@ -12,6 +12,7 @@ if hasattr(ssl,"__create_unverified_context"):
     ssl._create_default_https_context = ssl._create_unverified_context
 
 #wrapper function
+#demonstrate caching and decorator and wrapper functions
 def timed_lru_cache(seconds:int, maxsize: int = 128):
     def wrapper_cache(func):  
         func = lru_cache(maxsize=maxsize) (func)
