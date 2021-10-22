@@ -1,11 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"os"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
 
-
+/*
 type album struct {
 	ID string `json:"id"`
 	Title string `json:"title"`
@@ -40,16 +44,77 @@ func getAlbumByID(c *gin.Context){
 	}
 	c.IndentedJSON(http.StatusNotFound,gin.H{"message":"album not found"})
 }
+*/
 
-func main(){
-	router := gin.Default()
-	router.GET("/albums", getAlbums)
-	router.POST("/albums",postAlbums)
-	router.GET("/albums/:id", getAlbumByID)
-	router.Run("localhost:8080")
+func DivideTwoOps(c *gin.Context) {
+	print("Test")
+	op1, err1 := strconv.Atoi(c.Query("op1"))
+	if err1 != nil {
+		fmt.Println(err1)
+		os.Exit(2)
+	}
+	op2, err2 := strconv.Atoi(c.Query("op2"))
+	if op2 == 0 {
+		c.IndentedJSON(http.StatusOK, gin.H{"val": "Cannot divide by zero"})
+		return
+	}
+	if err2 != nil {
+		fmt.Println(err1)
+		os.Exit(2)
+	}
+	c.IndentedJSON(http.StatusOK, gin.H{"val": float64(op1 / op2)})
 }
 
+func MultiplyTwoOps(c *gin.Context) {
+	print("Test")
+	op1, err1 := strconv.Atoi(c.Query("op1"))
+	if err1 != nil {
+		fmt.Println(err1)
+		os.Exit(2)
+	}
+	op2, err2 := strconv.Atoi(c.Query("op2"))
+	if err2 != nil {
+		fmt.Println(err1)
+		os.Exit(2)
+	}
+	c.IndentedJSON(http.StatusOK, gin.H{"val": op1 * op2})
+}
 
-func getAlbums(c * gin.Context){
-	c.IndentedJSON(http.StatusOK,albums)
+func SubtractTwoOps(c *gin.Context) {
+	print("Test")
+	op1, err1 := strconv.Atoi(c.Query("op1"))
+	if err1 != nil {
+		fmt.Println(err1)
+		os.Exit(2)
+	}
+	op2, err2 := strconv.Atoi(c.Query("op2"))
+	if err2 != nil {
+		fmt.Println(err1)
+		os.Exit(2)
+	}
+	c.IndentedJSON(http.StatusOK, gin.H{"val": op1 - op2})
+}
+
+func addTwoOps(c *gin.Context) {
+	print("Test")
+	op1, err1 := strconv.Atoi(c.Query("op1"))
+	if err1 != nil {
+		fmt.Println(err1)
+		os.Exit(2)
+	}
+	op2, err2 := strconv.Atoi(c.Query("op2"))
+	if err2 != nil {
+		fmt.Println(err1)
+		os.Exit(2)
+	}
+	c.IndentedJSON(http.StatusOK, gin.H{"val": op1 + op2})
+}
+
+func main() {
+	router := gin.Default()
+	router.GET("/add", addTwoOps)
+	router.GET("/subtract", SubtractTwoOps)
+	router.GET("/multiply", MultiplyTwoOps)
+	router.GET("/divide", DivideTwoOps)
+	router.Run(":8080")
 }
